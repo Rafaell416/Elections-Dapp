@@ -13,8 +13,15 @@ contract Election {
   //Fetch candidate
   mapping (uint => Candidate) public candidates;
   //Store candidates count
+  uint public candidatesCount;
 
   constructor() {
+    addCandidate('Candidate 1');
+    addCandidate('Candidate 2');
+  }
 
+  function addCandidate (string _name) private {
+    candidatesCount ++;
+    candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
   }
 }
