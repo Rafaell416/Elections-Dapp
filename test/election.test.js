@@ -1,7 +1,8 @@
 let Election = artifacts.require('Election.sol')
 
-contract('Election', () => {
+contract('Election', (accounts) => {
   let electionInstance
+  let candidateId
 
   it('initializes with 2 candidates', () => {
     return Election.deployed()
@@ -26,5 +27,23 @@ contract('Election', () => {
         assert.equal(candidate[1], 'Candidate 2', 'Contains the correct name')
         assert.equal(candidate[2], 0, 'Contains the correct amount of votes')
       })
+  })
+
+  it('allows a voter to cast a vote', () => {
+    return Election.deployed()
+    .then(instance => {
+      electionInstance = instance;
+      candidateId = 1;
+      return electionInstance.vote(candidateId, { from: accounts[0] })
+    })
+    .then(receipt => electionInstance.voters(accounts[0]))
+    .then(voted => {
+      assert(voted, 'the voter was marked as voted')
+      return electionInstance.candidates(candidateId)
+    })
+    .then(candidate => {
+      let voteCount = candidate[2]
+      assert.equal(voteCount, 1, 'increments the candidates vote count')
+    })
   })
 })
