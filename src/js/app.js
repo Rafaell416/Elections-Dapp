@@ -31,7 +31,7 @@ App = {
   },
 
   render: () => {
-    let electionInstance
+    var electionInstance
     let loader = $("#loader")
     let content = $("#content")
 
@@ -47,14 +47,15 @@ App = {
     })
 
     // Load contract data
-    App.contracts.Election.deployed().then((instance) => {
+    App.contracts.Election.deployed()
+    .then((instance) => {
       electionInstance = instance
       return electionInstance.candidatesCount()
     }).then((candidatesCount) => {
       let candidatesResults = $("#candidatesResults")
       candidatesResults.empty()
 
-      for (let i = 1 i <= candidatesCount i++) {
+      for (let i = 1; i <= candidatesCount; i++) {
         electionInstance.candidates(i).then((candidate) => {
           let id = candidate[0]
           let name = candidate[1]
