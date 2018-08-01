@@ -38,5 +38,3 @@ See free video tutorial for full explanation of these steps:
 ## Step 6. Run the Front End Application
 `$ npm run dev`
 Visit this URL in your browser: http://localhost:3000
-
-If you get stuck, please reference the free video tutorial.
